@@ -19,13 +19,11 @@ URequestWebApiCallProxy::URequestWebApiCallProxy(const FObjectInitializer& Objec
 {
 }
 
-URequestWebApiCallProxy* URequestWebApiCallProxy::RequestWebApi(UWebApi* WebApi, UWebApiRequestBody* Request, const TArray<UObject*>& RequestFilters, const TArray<UObject*>& ResponseFilters)
+URequestWebApiCallProxy* URequestWebApiCallProxy::RequestWebApi(UWebApi* WebApi, UWebApiRequestBody* Request)
 {
 	URequestWebApiCallProxy* Proxy = NewObject<URequestWebApiCallProxy>();
 	Proxy->WebApi = WebApi;
 	Proxy->Request = Request;
-	Proxy->RequestFilters = RequestFilters;
-	Proxy->ResponseFilters = ResponseFilters;
 
 	Proxy->CallbackParam = NewObject<URequestWebApiCallbackParam>();
 
@@ -47,14 +45,13 @@ void URequestWebApiCallProxy::Activate()
 		return;
 	}
 
-	// WebApi->OnRequestStart.AddUObject(this, &URequestWebApiCallProxy::OnRequestStartInternal);
 	BindCallback(WebApi->OnRequestStart, "OnRequestStartInternal");
 	BindCallback(WebApi->OnRequestProgress, "OnRequestProgressInternal");
 	BindCallback(WebApi->OnRequestSuccess, "OnRequestSuccessInternal");
 	BindCallback(WebApi->OnRequestFailure, "OnRequestFailureInternal");
 	BindCallback(WebApi->OnRequestCompleted, "OnRequestCompletedInternal");
 
-	WebApi->ProcessRequest(Request, RequestFilters, ResponseFilters);
+	WebApi->ProcessRequest(Request);
 }
 
 void URequestWebApiCallProxy::OnRequestStartInternal(UWebApi* Api, UWebApiRequestBody* InRequest)

@@ -131,23 +131,15 @@ private:
 	/** リクエスト */
 	class UWebApiRequestBody* Request;
 
-	/** リクエストフィルターリスト */
-	TArray<UObject*> RequestFilters;
-
-	/** レスポンスフィルターリスト */
-	TArray<UObject*> ResponseFilters;
-
 public:
 	/**
 	 *　WebApiリクエスト実行
 	 * @param WebApi API
 	 * @param Request リクエスト本体
-	 * @param RequestFilters リクエストフィルターリスト
-	 * @param ResponseFilters レスポンスフィルターリスト
 	 * @return WebApiリクエスト実行プロキシ
 	 */
-	UFUNCTION(BlueprintCallable, Category="NekoNeko|Online|WebApi", meta=(BlueprintInternalUseOnly="true", AutoCreateRefTerm="RequestFilters, ResponseFilters"))
-	static URequestWebApiCallProxy* RequestWebApi(class UWebApi* WebApi, class UWebApiRequestBody* Request, const TArray<UObject*>& RequestFilters, const TArray<UObject*>& ResponseFilters);
+	UFUNCTION(BlueprintCallable, Category="NekoNeko|Online|WebApi", meta=(BlueprintInternalUseOnly="true"))
+	static URequestWebApiCallProxy* RequestWebApi(class UWebApi* WebApi, class UWebApiRequestBody* Request);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

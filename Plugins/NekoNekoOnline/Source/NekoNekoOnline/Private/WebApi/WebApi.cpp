@@ -16,6 +16,13 @@ UWebApi::UWebApi(const FObjectInitializer& ObjectInitializer)
 	ResponseClass = UWebApiResponseBodyString::StaticClass();
 }
 
+void UWebApi::PostInitProperties()
+{
+	Super::PostInitProperties();
+
+	OnPostInitProperties();
+}
+
 UWebApi* UWebApi::Create(UObject* WorldContext, TSubclassOf<UWebApi> ApiClass)
 {
 	return NewObject<UWebApi>(WorldContext, ApiClass);
@@ -33,7 +40,11 @@ FString UWebApi::GenerateUrl()
 	return Url;
 }
 
-bool UWebApi::ProcessRequest(UWebApiRequestBody* InRequest, const TArray<UObject*>& InRequestFilters, const TArray<UObject*>& InResponseFilters)
+void UWebApi::OnPostInitProperties_Implementation()
+{
+}
+
+bool UWebApi::ProcessRequest(UWebApiRequestBody* InRequest)
 {
 	FScopeLock ScopeLock(&SyncObject);
 
@@ -44,11 +55,9 @@ bool UWebApi::ProcessRequest(UWebApiRequestBody* InRequest, const TArray<UObject
 	}
 
 	UWebApiRequestBody* Request = InRequest;
-	ProcessingRequestFilters = InRequestFilters;
-	ProcessingResponseFilters = InResponseFilters;
 
 	// フィルタリング
-	for (auto FilterObject : ProcessingRequestFilters)
+	for (auto FilterObject : RequestFilters)
 	{
 		if (auto RequestFilter = Cast<IWebApiRequestFilterInterface>(FilterObject))
 		{
@@ -220,7 +229,7 @@ void UWebApi::OnRequestCompletedInternal(FHttpRequestPtr InRequest, FHttpRespons
 	}
 
 	// フィルタリング
-	for (auto FilterObject : ProcessingResponseFilters)
+	for (auto FilterObject : ResponseFilters)
 	{
 		if (auto ResponseFilter = Cast<IWebApiResponseFilterInterface>(FilterObject))
 		{

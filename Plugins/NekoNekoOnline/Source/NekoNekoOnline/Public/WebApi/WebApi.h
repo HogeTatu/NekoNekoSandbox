@@ -27,6 +27,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="NekoNeko|Online|WebApi")
 	TSubclassOf<UWebApiResponseBody> ResponseClass;
 
+	/** リクエストフィルターリスト */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="NekoNeko|Online|WebApi")
+	TArray<UObject*> RequestFilters;
+
+	/** レスポンスフィルターリスト */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="NekoNeko|Online|WebApi")
+	TArray<UObject*> ResponseFilters;
+
 	/** リクエスト開始時コールバック */
 	UPROPERTY(BlueprintAssignable, Category="NekoNeko|Online|WebApi")
 	FOnRequestStart OnRequestStart;
@@ -51,12 +59,6 @@ private:
 	/** リクエスト中フラグ */
 	bool bIsProcessingRequest;
 
-	/** 処理中リクエストフィルターリスト */
-	TArray<UObject*> ProcessingRequestFilters;
-
-	/** 処理中レスポンスフィルターリスト */
-	TArray<UObject*> ProcessingResponseFilters;
-
 	/** 処理中リクエスト */
 	FHttpRequestPtr ProcessingRequest;
 
@@ -68,6 +70,9 @@ private:
 
 public:
 	UWebApi(const FObjectInitializer& ObjectInitializer);
+
+	// UObject interface
+	virtual void PostInitProperties() override;
 
 	/**
 	 * APIインスタンスを作成
@@ -95,14 +100,18 @@ public:
 	FString GenerateUrl();
 
 	/**
+	 * PostInitProperties時のイベント
+	 */
+	UFUNCTION(BlueprintNativeEvent, Category="NekoNeko|Online|WebApi")
+	void OnPostInitProperties();
+
+	/**
 	 * リクエスト開始
 	 * @param Request リクエスト本体
-	 * @param RequestFilters リクエストフィルターリスト
-	 * @param ResponseFilters レスポンスフィルターリスト
 	 * @return 正常にリクエストできたらtrue
 	 */
-	UFUNCTION(BlueprintCallable, Category="NekoNeko|Online|WebApi", meta=(AutoCreateRefTerm="RequestFilters, ResponseFilters"))
-	bool ProcessRequest(UWebApiRequestBody* Request, const TArray<UObject*>& RequestFilters, const TArray<UObject*>& ResponseFilters);
+	UFUNCTION(BlueprintCallable, Category="NekoNeko|Online|WebApi")
+	bool ProcessRequest(UWebApiRequestBody* Request);
 
 	/**
 	 * リクエストキャンセル
