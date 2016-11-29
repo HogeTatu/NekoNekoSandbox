@@ -99,8 +99,6 @@ class NEKONEKOONLINE_API URequestWebApiCallProxy : public UOnlineBlueprintCallPr
 {
 	GENERATED_UCLASS_BODY()
 
-	virtual void PostInitProperties() override;
-
 public:
 	/** 開始コールバック */
 	UPROPERTY(BlueprintAssignable)
