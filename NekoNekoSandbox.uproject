@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.14",
+	"Category": "",
+	"Description": "NekoNekoPlugin Sandbox Project.",
+	"Modules": [
+		{
+			"Name": "NekoNekoSandbox",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"AdditionalPluginDirectories": [
+		"/NekoNekoSandbox/Plugins"
+	]
+}

@@ -1,0 +1,23 @@
+﻿{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "NekoNekoGeneral",
+	"Description": "汎用機能プラグイン",
+	"Category": "NekoNeko",
+	"CreatedBy": "@HogeTatu",
+	"CreatedByURL": "https://twitter.com/HogeTatu",
+	"DocsURL": "https://github.com/HogeTatu/NekoNekoSandbox",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/HogeTatu/NekoNekoSandbox",
+	"CanContainContent": false,
+	"IsBetaVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "NekoNekoGeneral",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
