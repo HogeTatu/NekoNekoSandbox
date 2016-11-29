@@ -19,16 +19,6 @@ URequestWebApiCallProxy::URequestWebApiCallProxy(const FObjectInitializer& Objec
 {
 }
 
-void URequestWebApiCallProxy::PostInitProperties()
-{
-	Super::PostInitProperties();
-
-	// if (!HasAnyFlags(RF_ClassDefaultObject))
-	// {
-	// 	CallbackParam = NewObject<URequestWebApiCallbackParam>(GetTransientPackage());
-	// }
-}
-
 URequestWebApiCallProxy* URequestWebApiCallProxy::RequestWebApi(UWebApi* WebApi, UWebApiRequestBody* Request, const TArray<UObject*>& RequestFilters, const TArray<UObject*>& ResponseFilters)
 {
 	URequestWebApiCallProxy* Proxy = NewObject<URequestWebApiCallProxy>();
