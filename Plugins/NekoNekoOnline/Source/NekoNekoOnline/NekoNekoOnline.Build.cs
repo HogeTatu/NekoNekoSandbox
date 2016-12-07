@@ -10,6 +10,8 @@ public class NekoNekoOnline : ModuleRules
 			new string[]
 			{
 				"NekoNekoOnline/Public",
+				"NekoNekoOnline/Public/Encode",
+				"NekoNekoOnline/Public/Udp",
 				"NekoNekoOnline/Public/WebApi",
 			}
 		);
@@ -18,6 +20,8 @@ public class NekoNekoOnline : ModuleRules
 			new string[]
 			{
 				"NekoNekoOnline/Private",
+				"NekoNekoOnline/Private/Encode",
+				"NekoNekoOnline/Private/Udp",
 				"NekoNekoOnline/Private/WebApi",
 				"NekoNekoOnline/Private/ThirdParty/liboauthcpp",
 			}
@@ -27,8 +31,10 @@ public class NekoNekoOnline : ModuleRules
 			new string[]
 			{
 				"Core",
-			}
-		);
+                "Networking",
+                "Sockets",
+            }
+        );
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
@@ -39,6 +45,8 @@ public class NekoNekoOnline : ModuleRules
 				"SlateCore",
                 "HTTP",
                 "Json",
+                "Networking",
+                "Sockets",
                 "NekoNekoGeneral",
 			}
 		);
