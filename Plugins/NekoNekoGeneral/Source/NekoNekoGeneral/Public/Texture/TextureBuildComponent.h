@@ -10,6 +10,11 @@ class NEKONEKOGENERAL_API UTextureBuildComponent : public UActorComponent
 	GENERATED_UCLASS_BODY()
 
 public:
+	/** テクスチャ */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Texture")
+	int32 MipIndexMax;
+
+public:
 	/**
 	 * テクスチャ更新
 	 * @param InTextureData テクスチャデータ
@@ -19,7 +24,7 @@ public:
 	 * @return 更新が完了したらtrue
 	 */
 	UFUNCTION(BlueprintCallable, Category="Texture")
-	bool UpdateTexture(const TArray<uint8>& InTextureData, int32 InSizeX, int32 InSizeY, TEnumAsByte<EPixelFormat> InFormat);
+	bool UpdateTexture(const TArray<uint8>& InTextureData, int32 InSizeX, int32 InSizeY, TEnumAsByte<EPixelFormat> InFormat, int32 MipIndex=0);
 
 	/**
 	 * テクスチャ取得

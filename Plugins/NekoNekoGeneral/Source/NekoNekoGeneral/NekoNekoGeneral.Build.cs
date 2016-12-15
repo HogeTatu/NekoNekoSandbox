@@ -39,6 +39,7 @@ public class NekoNekoGeneral : ModuleRules
 				"Slate",
 				"SlateCore",
 				"Json",
+				"RenderCore",
 			}
 		);
 
