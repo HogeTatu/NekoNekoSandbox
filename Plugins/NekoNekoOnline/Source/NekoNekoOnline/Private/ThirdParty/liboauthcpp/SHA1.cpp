@@ -169,8 +169,8 @@ bool CSHA1::HashFile(char *szFileName)
 
 	if(szFileName == NULL) return false;
 
-	errno_t err = fopen_s(&fIn, szFileName, "rb");
-	if(err != 0) return false;
+	fIn = fopen(szFileName, "rb");
+	if(fIn == NULL) return false;
 
 	fseek(fIn, 0, SEEK_END);
 	ulFileSize = (unsigned long)ftell(fIn);
@@ -249,27 +249,27 @@ void CSHA1::ReportHash(char *szReport, unsigned char uReportType)
 
 	if(uReportType == REPORT_HEX)
 	{
-		sprintf_s(szTemp, strlen(szTemp), "%02X", m_digest[0]);
-		strcat_s(szReport, strlen(szReport), szTemp);
+		sprintf(szTemp, "%02X", m_digest[0]);
+		strcat(szReport, szTemp);
 
 		for(i = 1; i < 20; i++)
 		{
-			sprintf_s(szTemp, strlen(szTemp), " %02X", m_digest[i]);
-			strcat_s(szReport, strlen(szReport), szTemp);
+			sprintf(szTemp, " %02X", m_digest[i]);
+			strcat(szReport, szTemp);
 		}
 	}
 	else if(uReportType == REPORT_DIGIT)
 	{
-		sprintf_s(szTemp, strlen(szTemp), "%u", m_digest[0]);
-		strcat_s(szReport, strlen(szReport), szTemp);
+		sprintf(szTemp, "%u", m_digest[0]);
+		strcat(szReport, szTemp);
 
 		for(i = 1; i < 20; i++)
 		{
-			sprintf_s(szTemp, strlen(szTemp), " %u", m_digest[i]);
-			strcat_s(szReport, strlen(szReport), szTemp);
+			sprintf(szTemp, " %u", m_digest[i]);
+			strcat(szReport, szTemp);
 		}
 	}
-	else strcpy_s(szReport, strlen(szReport), "Error: Unknown report type!");
+	else strcpy(szReport, "Error: Unknown report type!");
 }
 #endif
 

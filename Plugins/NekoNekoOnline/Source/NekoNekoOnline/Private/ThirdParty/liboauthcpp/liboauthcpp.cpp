@@ -7,6 +7,8 @@
 #include <vector>
 #include <cassert>
 
+#pragma warning (disable:4996)
+
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
 
 namespace OAuth {
@@ -87,7 +89,10 @@ std::string RequestTypeString(const Http::RequestType rt) {
 static std::pair<std::string, std::string> ParseKeyValuePair(const std::string& encoded) {
     std::size_t eq_pos = encoded.find("=");
     if (eq_pos == std::string::npos)
-        throw ParseError("Failed to find '=' in key-value pair.");
+    {
+        UE_LOG(LogTemp, Error, TEXT("Failed to find '=' in key-value pair."));
+        return std::pair<std::string, std::string>("", "");
+    }
     return std::pair<std::string, std::string>(
         encoded.substr(0, eq_pos),
         encoded.substr(eq_pos+1)
@@ -156,13 +161,25 @@ Token Token::extract(const KeyValuePairs& response) {
 
     KeyValuePairs::const_iterator it = response.find(Defaults::TOKEN_KEY);
     if (it == response.end())
-        throw MissingKeyError("Couldn't find oauth_token in response");
-    token_key = it->second;
+    {
+        UE_LOG(LogTemp, Error, TEXT("Couldn't find oauth_token in response"));
+        token_key = "";
+    }
+    else
+    {
+        token_key = it->second;
+    }
 
     it = response.find(Defaults::TOKENSECRET_KEY);
     if (it == response.end())
-        throw MissingKeyError("Couldn't find oauth_token_secret in response");
-    token_secret = it->second;
+    {
+        UE_LOG(LogTemp, Error, TEXT("Couldn't find oauth_token_secret in response"));
+        token_secret = "";
+    }
+    else
+    {
+        token_secret = it->second;
+    }
 
     return Token(token_key, token_secret);
 }
@@ -238,8 +255,8 @@ void Client::generateNonceTimeStamp()
     // both values makes life easier because generating a signature is
     // idempotent -- otherwise using macros can cause double evaluation and
     // incorrect results because of repeated calls to rand().
-    sprintf_s( szRand, Defaults::BUFFSIZE, "%x", ((testingTimestamp != 0) ? testingNonce : rand()) );
-    sprintf_s( szTime, Defaults::BUFFSIZE, "%ld", ((testingTimestamp != 0) ? (long)testingTimestamp : (long)time( NULL )) );
+    sprintf( szRand, "%x", ((testingTimestamp != 0) ? testingNonce : rand()) );
+    sprintf( szTime, "%ld", ((testingTimestamp != 0) ? (long)testingTimestamp : (long)time( NULL )) );
 
     m_nonce.assign( szTime );
     m_nonce.append( szRand );
