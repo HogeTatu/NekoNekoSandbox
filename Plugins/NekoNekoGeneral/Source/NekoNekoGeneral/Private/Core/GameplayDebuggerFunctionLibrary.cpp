@@ -1,6 +1,9 @@
 ﻿#include "NekoNekoGeneralPrivatePCH.h"
-#include "GameplayDebuggerCategoryReplicator.h"
 #include "GameplayDebuggerFunctionLibrary.h"
+
+#if WITH_GAMEPLAY_DEBUGGER
+#include "GameplayDebuggerCategoryReplicator.h"
+#endif
 
 UGameplayDebuggerFunctionLibrary::UGameplayDebuggerFunctionLibrary(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

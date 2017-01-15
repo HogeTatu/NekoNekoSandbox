@@ -6,49 +6,42 @@ public class NekoNekoAI : ModuleRules
 {
 	public NekoNekoAI(TargetInfo Target)
 	{
-		
 		PublicIncludePaths.AddRange(
 			new string[] {
 				"NekoNekoAI/Public"
-				// ... add public include paths required here ...
 			}
-			);
-				
-		
+		);
+
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				"NekoNekoAI/Private",
-				// ... add other private include paths required here ...
 			}
-			);
-			
-		
+		);
+
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"Core",
-				// ... add other public dependencies that you statically link with here ...
 			}
-			);
-			
-		
+		);
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
 				"CoreUObject",
 				"Engine",
-				"Slate",
-				"SlateCore",
-				// ... add private dependencies that you statically link with here ...	
 			}
+		);
+
+		if (Target.Type != TargetRules.TargetType.Server)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"Slate",
+					"SlateCore",
+				}
 			);
-		
-		
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-				// ... add any modules that your module loads dynamically here ...
-			}
-			);
+		}
 	}
 }

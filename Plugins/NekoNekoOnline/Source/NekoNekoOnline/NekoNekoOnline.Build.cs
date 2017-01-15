@@ -31,8 +31,6 @@ public class NekoNekoOnline : ModuleRules
 			new string[]
 			{
 				"Core",
-                "Networking",
-                "Sockets",
             }
         );
 
@@ -41,8 +39,6 @@ public class NekoNekoOnline : ModuleRules
 			{
 				"CoreUObject",
 				"Engine",
-				"Slate",
-				"SlateCore",
                 "HTTP",
                 "Json",
                 "Networking",
@@ -51,10 +47,15 @@ public class NekoNekoOnline : ModuleRules
 			}
 		);
 
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-			}
-		);
+		if (Target.Type != TargetRules.TargetType.Server)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"Slate",
+					"SlateCore",
+				}
+			);
+		}
 	}
 }

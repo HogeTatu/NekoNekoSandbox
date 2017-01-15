@@ -36,18 +36,21 @@ public class NekoNekoGeneral : ModuleRules
 			{
 				"CoreUObject",
 				"Engine",
-				"Slate",
-				"SlateCore",
 				"Json",
 				"RenderCore",
 			}
 		);
 
-		DynamicallyLoadedModuleNames.AddRange(
-			new string[]
-			{
-			}
-		);
+		if (Target.Type != TargetRules.TargetType.Server)
+		{
+			PrivateDependencyModuleNames.AddRange(
+				new string[]
+				{
+					"Slate",
+					"SlateCore",
+				}
+			);
+		}
 
 		if (UEBuildConfiguration.bBuildDeveloperTools || (Target.Configuration != UnrealTargetConfiguration.Shipping && Target.Configuration != UnrealTargetConfiguration.Test))
 		{

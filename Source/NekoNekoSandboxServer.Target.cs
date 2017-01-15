@@ -22,4 +22,9 @@ public class NekoNekoSandboxServerTarget : TargetRules
 	{
 		OutExtraModuleNames.AddRange( new string[] { "NekoNekoSandbox" } );
 	}
+
+    public override bool GetSupportedPlatforms(ref List<UnrealTargetPlatform> OutPlatforms)
+    {
+        return UnrealBuildTool.UnrealBuildTool.GetAllServerPlatforms(ref OutPlatforms, false);
+    }
 }
